@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from .pypi import *
-from .npm import *
-from .docker import *
-from .ebook2site import *
-from .libgen import *
+from .dl_gh_book import *
 
 """BookerDownloadTool
 https://github.com/apachecnBookerDownloadTool"""
