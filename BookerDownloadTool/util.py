@@ -1,5 +1,21 @@
 import requests
 
+headers = {
+    'User-Agent': 'PostmanRuntime/7.26.8',
+    'Referer': 'https://www.bilibili.com/',
+}
+
+def fname_escape(name):
+    return name.replace('\\', '＼') \
+               .replace('/', '／') \
+               .replace(':', '：') \
+               .replace('*', '＊') \
+               .replace('?', '？') \
+               .replace('"', '＂') \
+               .replace('<', '＜') \
+               .replace('>', '＞') \
+               .replace('|', '｜')
+
 def request_retry(method, url, retry=10, check_status=False, **kw):
     kw.setdefault('timeout', 10)
     for i in range(retry):

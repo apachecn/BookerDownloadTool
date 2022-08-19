@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from .dl_gh_book import *
+from .bili import *
 
 """BookerDownloadTool
 https://github.com/apachecnBookerDownloadTool"""
