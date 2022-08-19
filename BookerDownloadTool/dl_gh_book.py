@@ -30,7 +30,7 @@ def dl_gh_book(args):
     print(url)
     readme_url = url.replace('SUMMARY.md', 'README.md')
     html = request_retry('GET', readme_url, proxies=proxy).text
-    title = pq(html).find(f'{args.article}>h1, title').eq(0).text().strip()
+    title = pq(html).find(f'{args.article}>h1').eq(0).text().strip()
     
     config = tmpl.copy()
     for k, v in config.items():
