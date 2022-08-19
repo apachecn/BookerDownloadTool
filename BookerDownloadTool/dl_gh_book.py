@@ -7,12 +7,10 @@ from .util import *
 import re
 import os
 
-MARKDOWN_PANEL = 'article'
-
 tmpl = {
-    "link": f"{MARKDOWN_PANEL} li a",
-    "title": f"{MARKDOWN_PANEL}>h1",
-    "content": f"{MARKDOWN_PANEL}",
+    "link": "{article} li a",
+    "title": "{article}>h1",
+    "content": "{article}",
     "remove": "a.anchor",
     "optiMode": "none",
 }
@@ -35,6 +33,8 @@ def dl_gh_book(args):
     title = pq(html).find('article>h1, title').eq(0).text().strip()
     
     config = tmpl.copy()
+    for k, v in config.items():
+        config[k] = v.replace("{article}", args.article)
     config['name'] = title
     config['url'] = url
     config['imgThreads'] = args.threads

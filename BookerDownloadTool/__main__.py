@@ -13,6 +13,7 @@ def main():
     gh_book_parser.add_argument("url", help="SUMMARY.md url")
     gh_book_parser.add_argument("-t", "--threads", type=int, default=5, help="num of threads")
     gh_book_parser.add_argument("-p", "--proxy", help="proxy")
+    gh_book_parser.add_argument("-a", "--article", default='article', help="article selector")
     gh_book_parser.set_defaults(func=dl_gh_book)
     
     bili_parser = subparsers.add_parser("dl-bili", help="download bilibili video")
