@@ -19,8 +19,9 @@ tmpl = {
 
 def dl_gh_book(args):
     url = args.url
+    proxy = None
     if args.proxy:
-        args.proxy = {
+        proxy = {
             'http': args.proxy,
             'https': args.proxy,
         }
@@ -30,7 +31,7 @@ def dl_gh_book(args):
         return
     print(url)
     readme_url = url.replace('SUMMARY.md', 'README.md')
-    html = request_retry('GET', readme_url, proxies=args.proxy).text
+    html = request_retry('GET', readme_url, proxies=proxy).text
     title = pq(html).find('article>h1, title').eq(0).text().strip()
     
     config = tmpl.copy()
