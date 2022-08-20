@@ -50,7 +50,7 @@ def download_ln(args):
     save_path = args.save_path
     
     url = f'https://www.wenku8.net/book/{id}.htm'
-    html = request_retry('GET', url, headers=headers).content.decode('gbk')
+    html = request_retry('GET', url, headers=default_hdrs).content.decode('gbk')
     info = get_info(html)
     print(info['title'], info['author'], info['dt'])
     
@@ -64,8 +64,8 @@ def download_ln(args):
         'title': info['title'], 
         'content': f"<p>作者：{info['author']}</p>",
     }]
-    url = f'http://dl.wenku8.com/down.php?type=utf8&id={id}'
-    text = request_retry('GET', url, headers=headers).content.decode('utf-8')
+    url = f'http://dl.wenku8.com/down.php?type=udefault_hdrstf8&id={id}'
+    text = request_retry('GET', url, headers=default_hdrs).content.decode('utf-8')
     chs = format_text(text)
     articles += chs
     gen_epub(articles, {}, None, ofname)
@@ -118,7 +118,7 @@ def fetch_ln(args):
         if stop: break
         print(f'page: {i}')
         url = f'https://www.wenku8.net/modules/article/index.php?page={i}'
-        html = request_retry('GET', url, headers=headers).content.decode('gbk')
+        html = request_retry('GET', url, headers=default_hdrs).content.decode('gbk')
         toc = get_toc(html)
         if len(toc) == 0: break
         for bk in toc:
