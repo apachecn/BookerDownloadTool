@@ -48,9 +48,11 @@ def get_info(html):
 def download_ln(args):
     id = args.id
     save_path = args.save_path
+    headers = default_hdrs.copy()
+    headers['Cookie'] = args.cookie
     
     url = f'https://www.wenku8.net/book/{id}.htm'
-    html = request_retry('GET', url, headers=default_hdrs).content.decode('gbk')
+    html = request_retry('GET', url, headers=headers).content.decode('gbk')
     info = get_info(html)
     print(info['title'], info['author'], info['dt'])
     
@@ -65,7 +67,7 @@ def download_ln(args):
         'content': f"<p>作者：{info['author']}</p>",
     }]
     url = f'http://dl.wenku8.com/down.php?type=udefault_hdrstf8&id={id}'
-    text = request_retry('GET', url, headers=default_hdrs).content.decode('utf-8')
+    text = request_retry('GET', url, headers=headers).content.decode('utf-8')
     chs = format_text(text)
     articles += chs
     gen_epub(articles, {}, None, ofname)
@@ -109,6 +111,8 @@ def fetch_ln(args):
     fname = args.fname
     st = args.start
     ed = args.end
+    headers = default_hdrs.copy()
+    headers['Cookie'] = args.cookie
 
     ofile = open(fname, 'a', encoding='utf-8')
     
@@ -118,7 +122,7 @@ def fetch_ln(args):
         if stop: break
         print(f'page: {i}')
         url = f'https://www.wenku8.net/modules/article/index.php?page={i}'
-        html = request_retry('GET', url, headers=default_hdrs).content.decode('gbk')
+        html = request_retry('GET', url, headers=headers).content.decode('gbk')
         toc = get_toc(html)
         if len(toc) == 0: break
         for bk in toc:
