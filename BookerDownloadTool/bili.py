@@ -17,7 +17,7 @@ def batch_home_bili(args):
     to_audio = args.audio
     for i in range(st, ed + 1):
         url = f'https://api.bilibili.com/x/space/arc/search?search_type=video&mid={mid}&pn={i}&order=pubdate'
-        j = requests.get(url, headers=headers).json()
+        j = requests.get(url, headers=bili_hdrs).json()
         if j['code'] != 0:
             print('解析失败：' + j['message'])
             return
@@ -34,7 +34,7 @@ def batch_kw_bili(args):
     kw_enco = quote_plus(kw)
     for i in range(st, ed + 1):
         url = f'https://api.bilibili.com/x/web-interface/search/type?search_type=video&keyword={kw_enco}&page={i}&order=pubdate'
-        j = requests.get(url, headers=headers).json()
+        j = requests.get(url, headers=bili_hdrs).json()
         if j['code'] != 0:
             print('解析失败：' + j['message'])
             return
@@ -58,7 +58,7 @@ def download_bili(args):
         bv = id
         
     url = f'https://api.bilibili.com/x/web-interface/view?bvid={bv}&aid={av}'
-    j = requests.get(url, headers=headers).json()
+    j = requests.get(url, headers=bili_hdrs).json()
     if j['code'] != 0:
         print('获取 CID 失败：' + j['message'])
         return
@@ -80,12 +80,12 @@ def download_bili(args):
     try: os.mkdir('out')
     except: pass
     url = f'https://api.bilibili.com/x/player/playurl?cid={cid}&otype=json&bvid={bv}&aid={av}'
-    j = requests.get(url, headers=headers).json()
+    j = requests.get(url, headers=bili_hdrs).json()
     if j['code'] != 0:
         print('解析失败：' + j['message'])
         return
     video_url = j['data']['durl'][0]['url']
-    video = requests.get(video_url, headers=headers).content
+    video = requests.get(video_url, headers=bili_hdrs).content
     if not to_audio:
         open(fname, 'wb').write(video)
         return
