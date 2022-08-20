@@ -1,6 +1,7 @@
 import requests
 import os
 import shutil
+from os import path
 
 bili_hdrs = {
     'User-Agent': 'PostmanRuntime/7.26.8',
@@ -10,6 +11,13 @@ bili_hdrs = {
 default_hdrs = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36',
 }
+
+UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36'
+
+DIR = path.dirname(path.abspath(__file__))
+
+def d(name):
+    return path.join(DIR, name)
 
 def fname_escape(name):
     return name.replace('\\', '＼') \

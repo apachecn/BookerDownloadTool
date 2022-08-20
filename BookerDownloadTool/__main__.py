@@ -54,6 +54,10 @@ def main():
     ln_fetch_parser.add_argument("-e", "--end", required=True, help="ending date (YYYYMMDD)")
     ln_fetch_parser.set_defaults(func=fetch_ln)
     
+    zhihu_ques_sele_parser = subparsers.add_parser("zhihu-ques-sele", help="crawl zhihu question by **selenium**")
+    zhihu_ques_sele_parser.add_argument("qid", help="qid")
+    zhihu_ques_sele_parser.set_defaults(func=zhihu_ques_sele)
+    
     args = parser.parse_args()
     args.func(args)
     
