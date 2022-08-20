@@ -60,7 +60,7 @@ def download_ln(args):
     if path.exists(ofname):
         print('已存在')
         return
-    safe_mkdir('out')
+    safe_mkdir(save_path)
     
     articles = [{
         'title': info['title'], 
