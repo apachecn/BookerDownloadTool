@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from .zhihu_ques_sele import *
+from .lightnovel import *
 from .dl_gh_book import *
 from .bili import *
 
