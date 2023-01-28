@@ -1,7 +1,11 @@
 import argparse
 import sys
 from . import __version__
-from . import *
+from .zhihu_ques_sele import *
+from .zhihu_ques import *
+from .lightnovel import *
+from .dl_gh_book import *
+from .bili import *
 
 def main():
     parser = argparse.ArgumentParser(prog="BookerDownloadTool", formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -54,6 +58,10 @@ def main():
     ln_fetch_parser.add_argument("-e", "--end", required=True, help="ending date (YYYYMMDD)")
     ln_fetch_parser.set_defaults(func=fetch_ln)
     
+    zhihu_ques_sele_parser = subparsers.add_parser("zhihu-ques", help="crawl zhihu question by requests")
+    zhihu_ques_sele_parser.add_argument("qid", help="qid")
+    zhihu_ques_sele_parser.set_defaults(func=zhihu_ques)
+
     zhihu_ques_sele_parser = subparsers.add_parser("zhihu-ques-sele", help="crawl zhihu question by **selenium**")
     zhihu_ques_sele_parser.add_argument("qid", help="qid")
     zhihu_ques_sele_parser.set_defaults(func=zhihu_ques_sele)
