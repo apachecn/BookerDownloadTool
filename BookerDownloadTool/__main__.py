@@ -60,7 +60,7 @@ def main():
     
     zhihu_ques_parser = subparsers.add_parser("zhihu-ques", help="crawl zhihu question by requests")
     zhihu_ques_parser.add_argument("qid", help="qid")
-    zhihu_ques_parser.add_argument("-o", "--opti-mode", default='thres', help="img optimazation mode")
+    zhihu_ques_parser.add_argument("-o", "--opti-mode", default='thres', help="img optimazation mode, default 'thres'")
     zhihu_ques_parser.set_defaults(func=zhihu_ques)
 
     zhihu_ques_sele_parser = subparsers.add_parser("zhihu-ques-sele", help="crawl zhihu question by **selenium**")
