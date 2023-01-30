@@ -67,7 +67,7 @@ def download_bili(args):
     author = fname_escape(j['data']['owner']['name'])
     title1 = fname_escape(j['data']['title'])
     for it in j['data']['pages']:
-        cids = it['cid']
+        cid = it['cid']
         pg = it['page']
         title2 = fname_escape(it['part'])
         title = title1 if title1 == title2 \
