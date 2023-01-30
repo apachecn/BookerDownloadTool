@@ -64,34 +64,35 @@ def download_bili(args):
         return
     av = j['data']['aid']
     bv = j['data']['bvid']
-    cid = j['data']['cid']
-    title = fname_escape(j['data']['title'])
     author = fname_escape(j['data']['owner']['name'])
-    print(title, author)
-    name = f'{title} - {author} - {bv}'
-    fname = f'out/{name}'
-    if to_audio:
-        fname += '.mp3'
-    else:
-        fname += '.flv'
-    if path.isfile(fname):
-        print(f'{fname} 已存在')
-        return
-    try: os.mkdir('out')
-    except: pass
-    url = f'https://api.bilibili.com/x/player/playurl?cid={cid}&otype=json&bvid={bv}&aid={av}'
-    j = requests.get(url, headers=bili_hdrs).json()
-    if j['code'] != 0:
-        print('解析失败：' + j['message'])
-        return
-    video_url = j['data']['durl'][0]['url']
-    video = requests.get(video_url, headers=bili_hdrs).content
-    if not to_audio:
-        open(fname, 'wb').write(video)
-        return
-    tmp_fname = path.join(tempfile.gettempdir(), uuid.uuid4().hex + '.flv')
-    open(tmp_fname, 'wb').write(video)
-    vc = VideoFileClip(tmp_fname)
-    vc.audio.write_audiofile(fname)
-    vc.reader.close()
-    os.unlink(tmp_fname)
+    title1 = fname_escape(j['data']['title'])
+    for it in j['data']['pages']:
+        cids = it['cid']
+        pg = it['page']
+        title2 = fname_escape(it['part'])
+        title = title1 if title1 == title2 \
+                else f'{title1} P{pg} - {title2}'
+        print(title, author)
+        name = f'{title} - {author} - {bv}'
+        fname = f'out/{name}.mp3' of to_audio else f'out/{name}.flv'
+        if path.isfile(fname):
+            print(f'{fname} 已存在')
+            return
+        try: os.mkdir('out')
+        except: pass
+        url = f'https://api.bilibili.com/x/player/playurl?cid={cid}&otype=json&bvid={bv}&aid={av}'
+        j = requests.get(url, headers=bili_hdrs).json()
+        if j['code'] != 0:
+            print('解析失败：' + j['message'])
+            return
+        video_url = j['data']['durl'][0]['url']
+        video = requests.get(video_url, headers=bili_hdrs).content
+        if not to_audio:
+            open(fname, 'wb').write(video)
+            return
+        tmp_fname = path.join(tempfile.gettempdir(), uuid.uuid4().hex + '.flv')
+        open(tmp_fname, 'wb').write(video)
+        vc = VideoFileClip(tmp_fname)
+        vc.audio.write_audiofile(fname)
+        vc.reader.close()
+        os.unlink(tmp_fname)
