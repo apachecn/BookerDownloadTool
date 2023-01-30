@@ -74,7 +74,7 @@ def download_bili(args):
                 else f'{title1} P{pg} - {title2}'
         print(title, author)
         name = f'{title} - {author} - {bv}'
-        fname = f'out/{name}.mp3' of to_audio else f'out/{name}.flv'
+        fname = f'out/{name}.mp3' if to_audio else f'out/{name}.flv'
         if path.isfile(fname):
             print(f'{fname} 已存在')
             return
