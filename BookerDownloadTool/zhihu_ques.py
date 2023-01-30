@@ -6,7 +6,6 @@ from EpubCrawler.config import config as cralwer_config
 from datetime import datetime
 from GenEpub import gen_epub
 
-cralwer_config['optiMode'] = 'thres'
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36',
 }
@@ -33,6 +32,8 @@ def get_content(art):
     
 def zhihu_ques(args):
     qid = args.qid
+    cralwer_config['optiMode'] = args.opti_mode
+    
     url = f'https://www.zhihu.com/api/v4/questions/{qid}//answers?limit=20&include=content,voteup_count'
     j = request_retry('GET', url, headers=headers).json()
     title = '知乎问答：' + j['data'][0]['question']['title']
