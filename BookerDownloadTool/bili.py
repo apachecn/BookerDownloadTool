@@ -77,19 +77,19 @@ def download_bili(args):
         fname = f'out/{name}.mp3' if to_audio else f'out/{name}.flv'
         if path.isfile(fname):
             print(f'{fname} 已存在')
-            return
+            continue
         try: os.mkdir('out')
         except: pass
         url = f'https://api.bilibili.com/x/player/playurl?cid={cid}&otype=json&bvid={bv}&aid={av}'
         j = requests.get(url, headers=bili_hdrs).json()
         if j['code'] != 0:
             print('解析失败：' + j['message'])
-            return
+            continue
         video_url = j['data']['durl'][0]['url']
         video = requests.get(video_url, headers=bili_hdrs).content
         if not to_audio:
             open(fname, 'wb').write(video)
-            return
+            continue
         tmp_fname = path.join(tempfile.gettempdir(), uuid.uuid4().hex + '.flv')
         open(tmp_fname, 'wb').write(video)
         vc = VideoFileClip(tmp_fname)
