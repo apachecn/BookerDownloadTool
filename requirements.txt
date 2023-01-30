@@ -2,3 +2,4 @@ requests
 pyquery
 EpubCrawler
 selenium
+imgyaso

@@ -2,6 +2,7 @@ import requests
 import os
 import shutil
 from os import path
+import imgyaso
 
 bili_hdrs = {
     'User-Agent': 'PostmanRuntime/7.26.8',
@@ -18,6 +19,18 @@ DIR = path.dirname(path.abspath(__file__))
 
 def d(name):
     return path.join(DIR, name)
+
+def opti_img(img, mode, colors):
+    if mode == 'quant':
+        return imgyaso.pngquant_bts(img, colors)
+    elif mode == 'grid':
+        return imgyaso.grid_bts(img)
+    elif mode == 'trunc':
+        return imgyaso.trunc_bts(img, colors)
+    elif mode == 'thres':
+        return imgyaso.adathres_bts(img)
+    else:
+        return img
 
 def fname_escape(name):
     return name.replace('\\', '＼') \
