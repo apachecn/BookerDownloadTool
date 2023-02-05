@@ -73,7 +73,7 @@ def main():
     dmzj_dl_parser.add_argument("-o", "--out", default="out", help="output dir")
     dmzj_dl_parser.add_argument("--img-threads", type=int, default=8, help="image threads")
     dmzj_dl_parser.add_argument("--ch-threads", type=int, default=8, help="chapter threads")
-    dmzj_dl_parser.add_argument("-e", "--exi-list", default="dmzj_exi.json", help="fname for existed comic")
+    dmzj_dl_parser.add_argument("-l", "--exi-list", default="dmzj_exi.json", help="fname for existed comic")
     dmzj_dl_parser.set_defaults(func=download_dmzj)
 
     dmzj_fetch_parser = subparsers.add_parser("dmzj-fetch", help="fetch dmzj comic ids")
@@ -87,7 +87,7 @@ def main():
     dmzj_batch_parser.add_argument("-o", "--out", default="out", help="output dir")
     dmzj_batch_parser.add_argument("--img-threads", type=int, default=8, help="image threads")
     dmzj_batch_parser.add_argument("--ch-threads", type=int, default=8, help="chapter threads")
-    dmzj_dl_parser.add_argument("-e", "--exi-list", default="dmzj_exi.json", help="fname for existed comic")
+    dmzj_batch_parser.add_argument("-l", "--exi-list", default="dmzj_exi.json", help="fname for existed comic")
     dmzj_batch_parser.set_defaults(func=batch_dmzj)
 
     args = parser.parse_args()
