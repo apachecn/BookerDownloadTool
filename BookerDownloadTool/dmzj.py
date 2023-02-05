@@ -79,11 +79,11 @@ def tr_download_dmzj_img(url, imgs, k):
     img = process_img(img)
     imgs[k] = img
     
-def download_dmzj_ch_safe(url, info):
-    try: download_dmzj_ch(url, info)
+def download_dmzj_ch_safe(url, info, odir):
+    try: download_dmzj_ch(url, info, odir)
     except Exception as ex: traceback.print_exc()
     
-def download_dmzj_ch(url, info):
+def download_dmzj_ch(url, info, odir):
     print(f'ch: {url}')
     html = request_retry('GET', url, headers=headers).text
     art = get_article(html)
@@ -92,11 +92,11 @@ def download_dmzj_ch(url, info):
         return
         
     name = f"{art['title']} - {info['author']} - {art['ch']}"
-    ofname = f'out/{name}.pdf'
+    ofname = f'{odir}/{name}.pdf'
     if name in existed or path.exists(ofname):
         print('文件已存在')
         return
-    safe_mkdir('out')
+    safe_mkdir(odir)
     
     imgs = {}
     hdls = []
@@ -135,7 +135,7 @@ def download_dmzj(args, block=True):
         
     hdls = []
     for url in info['toc']:
-        hdl = ch_pool.submit(download_dmzj_ch_safe, url, info)
+        hdl = ch_pool.submit(download_dmzj_ch_safe, url, info, args.out)
         hdls.append(hdl)
     if block:
         for h in hdls: h.result()
