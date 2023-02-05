@@ -75,6 +75,19 @@ def main():
     dmzj_dl_parser.add_argument("--ch-threads", type=int, default=8, help="chapter threads")
     dmzj_dl_parser.set_defaults(func=download_dmzj)
 
+    dmzj_fetch_parser = subparsers.add_parser("dmzj-fetch", help="fetch dmzj comic ids")
+    dmzj_fetch_parser.add_argument("fname", help="fname containing ids")
+    dmzj_fetch_parser.add_argument("-s", "--start", help="starting date")
+    dmzj_fetch_parser.add_argument("-e", "--end", help="ending date")
+    dmzj_fetch_parser.set_defaults(func=fetch_dmzj)
+
+    dmzj_batch_parser = subparsers.add_parser("dmzj-batch", help="download dmzj comic in batch")
+    dmzj_batch_parser.add_argument("fname", help="fname containing ids")
+    dmzj_batch_parser.add_argument("-o", "--out", default="out", help="output dir")
+    dmzj_batch_parser.add_argument("--img-threads", type=int, default=8, help="image threads")
+    dmzj_batch_parser.add_argument("--ch-threads", type=int, default=8, help="chapter threads")
+    dmzj_batch_parser.set_defaults(func=batch_dmzj)
+
     args = parser.parse_args()
     args.func(args)
     
