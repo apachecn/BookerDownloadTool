@@ -3,15 +3,13 @@ from pyquery import PyQuery as pq
 import os
 import sys
 from os import path
-from imgyaso import grid
 import shutil
 import json
 import subprocess as subp
 import uuid
 import tempfile
-import numpy as np
-import cv2
 import re
+from imgyaso import noisebw_bts
 
 # npm install -g gen-epub
 
@@ -92,26 +90,7 @@ def get_info(html):
     return {'title': filter_gbk(fname_escape(title)), 'imgs': imgs, 'tags': tags}
 
 def process_img(img):
-    img_ori = img
-    img = np.frombuffer(img, np.uint8)
-    img = cv2.imdecode(img, cv2.IMREAD_GRAYSCALE)
-    if img is None: return img_ori
-    
-    h, w = img.shape
-    if (w > h): img = img.T[::-1]
-    
-    h, w = img.shape
-    if w > 1000:
-        rate = 1000 / w
-        nh = round(h * rate)
-        img = cv2.resize(img, (1000, nh), interpolation=cv2.INTER_CUBIC)
-    
-    img = grid(img)
-    img = cv2.imencode(
-        '.png', img, 
-        [cv2.IMWRITE_PNG_COMPRESSION, 9]
-    )[1]
-    return bytes(img)
+    return noisebw_bts(trunc_bts(anime4k_auto(img), 4))
 
 def gen_epub(articles, imgs, p):   
     imgs = imgs or {}

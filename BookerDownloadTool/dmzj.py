@@ -15,7 +15,6 @@ import uuid
 import img2pdf
 import subprocess as subp
 from concurrent.futures import ThreadPoolExecutor
-from EpubCrawler.util import request_retry
 from .util import *
 
 ch_pool = None

@@ -14,7 +14,6 @@ import tempfile
 import uuid
 import hashlib
 from imgyaso import pngquant_bts
-from EpubCrawler.util import request_retry
 from GenEpub import gen_epub
 from EpubCrawler.img import process_img
 from EpubCrawler.config import config
