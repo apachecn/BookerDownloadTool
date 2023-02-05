@@ -40,7 +40,7 @@ selectors = {
  
 def load_exi_list(args):
     global exi_list
-    if not exi_list and path.exists(fname):
+    if not exi_list and path.exists(args.exi_list):
         exi_list = set(json.loads(open(args.exi_list).read()))
                 
  
