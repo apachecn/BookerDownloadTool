@@ -7,6 +7,7 @@ from .lightnovel import *
 from .dl_gh_book import *
 from .bili import *
 from .dmzj import *
+from .discuz import *
 
 def main():
     parser = argparse.ArgumentParser(prog="BookerDownloadTool", formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -89,6 +90,35 @@ def main():
     dmzj_batch_parser.add_argument("--ch-threads", type=int, default=8, help="chapter threads")
     dmzj_batch_parser.add_argument("-l", "--exi-list", default="dmzj_exi.json", help="fname for existed comic")
     dmzj_batch_parser.set_defaults(func=batch_dmzj)
+
+    dl_dz_parser = subparsers.add_parser("dz", help="download a page of dz")
+    dl_dz_parser.add_argument("host", help="host: <domain>:<port>/<path>")
+    dl_dz_parser.add_argument("tid", help="tid")
+    dl_dz_parser.add_argument("-s", "--start", help="staring date")
+    dl_dz_parser.add_argument("-e", "--end", help="ending date")
+    dl_dz_parser.add_argument("-c", "--cookie", default="", help="dz cookie")
+    dl_dz_parser.add_argument("-a", "--all", action='store_true', help="whether to crawl all replies")
+    dl_dz_parser.add_argument("-l", "--existed-list", default='exi_dz.json', help="existed fnames JSON")
+    dl_dz_parser.set_defaults(func=download_dz)
+
+    fetch_parser = subparsers.add_parser("fetch-dz", help="fetch dz tids")
+    fetch_parser.add_argument("fname", help="fname containing tids")
+    fetch_parser.add_argument("host",  help="host: <domain>:<port>/<path>")
+    fetch_parser.add_argument("fid", help="fid")
+    fetch_parser.add_argument("-s", "--start", type=int, default=1, help="staring page num")
+    fetch_parser.add_argument("-e", "--end", type=int, default=10000000, help="ending page num")
+    fetch_parser.add_argument("-c", "--cookie", default="", help="gn cookie")
+    fetch_parser.set_defaults(func=fetch_dz)
+
+    batch_parser = subparsers.add_parser("batch-dz", help="batch download")
+    batch_parser.add_argument("fname", help="fname")
+    batch_parser.add_argument("-s", "--start", help="staring date")
+    batch_parser.add_argument("-e", "--end", help="ending date")
+    batch_parser.add_argument("-c", "--cookie", default="", help="gn cookie")
+    batch_parser.add_argument("-t", "--threads", type=int, default=8, help="num of threads")
+    batch_parser.add_argument("-a", "--all", action='store_true', help="whether to crawl all replies")
+    batch_parser.add_argument("-l", "--existed-list", default='exi_dz.json', help="existed fnames JSON")
+    batch_parser.set_defaults(func=batch_dz)
 
     args = parser.parse_args()
     args.func(args)
