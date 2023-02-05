@@ -25,6 +25,17 @@ DIR = path.dirname(path.abspath(__file__))
 
 d = lambda name: path.join(path.dirname(__file__, name))
 
+    
+def is_gbk(ch):
+    try: 
+        ch.encode('gbk')
+        return True
+    except:
+        return False
+    
+def filter_gbk(fname):
+    return ''.join([ch for ch in fname if is_gbk(ch)])
+
 def opti_img(img, mode, colors):
     if mode == 'quant':
         return imgyaso.pngquant_bts(img, colors)
