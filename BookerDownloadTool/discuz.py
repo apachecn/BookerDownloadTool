@@ -18,6 +18,7 @@ from EpubCrawler.util import request_retry
 from GenEpub import gen_epub
 from EpubCrawler.img import process_img
 from EpubCrawler.config import config
+from .util import *
  
 config['colors'] = 256
 config['imgSrc'] = ['zoomfile', 'src']
@@ -158,7 +159,7 @@ def download_dz(args):
         info['time'],
     ])
     if name in exi_list or \
-       f"{name} - pt1" in existed:
+       f"{name} - pt1" in exi_list:
         print('已存在')
         return
     p = f"{odir}/{name}.epub"
