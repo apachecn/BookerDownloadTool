@@ -47,6 +47,7 @@ def process_img(img):
 def download_nh(args):
     id = args.id
     odir = args.out
+    load_exi_list(args)
     
     url = f'https://nhentai.net/g/{id}/'
     html = get_retry(url).text
@@ -114,7 +115,8 @@ def extract_info(name):
     if len(rms) == 0: return ['', name]
     return (rms[0][0], rms[0][1].strip())
         
-def gen_exi(dir):
+def gen_exi(args):
+    dir = args.dir
     res = [
         extract_info(f.replace('.epub', ''))
         for f in os.listdir(dir)
@@ -126,7 +128,8 @@ def gen_exi(dir):
     open(ofname, 'w', encoding='utf-8') \
         .write(json.dumps(res))
     
-def fix_fnames(dir):
+def fix_fnames(args):
+    dir = args.dir
     files = os.listdir(dir)
     
     for f in files:
@@ -140,26 +143,3 @@ def fix_fnames(dir):
         else:
             os.rename(f, nf)
         
-def main():
-    op = sys.argv[1]
-    if op in ['dl', 'download']:
-        download(sys.argv[2])
-    elif op == 'batch':
-        batch(sys.argv[2])
-    elif op == 'fetch':
-        fetch(
-            sys.argv[2], 
-            sys.argv[3] if len(sys.argv) > 3 else "", 
-            int(sys.argv[4]) if len(sys.argv) > 4 else 1,
-            int(sys.argv[5]) if len(sys.argv) > 5 else 1_000_000,
-        )
-    elif op in ['extract', 'ext']:
-        extract(sys.argv[2])
-    elif op == 'fix':
-        fix_fnames(sys.argv[2])
-    elif op == 'log':
-        convert_log(sys.argv[2])
-    elif op == 'search':
-        print(check_exist(existed, sys.argv[2]))
-
-if __name__ == '__main__': main()
