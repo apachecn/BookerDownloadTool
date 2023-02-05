@@ -8,8 +8,6 @@ from imgyaso import pngquant_bts, \
 import execjs
 import traceback
 import sys
-import cv2
-import numpy as np
 import re
 import tempfile
 import json
@@ -17,7 +15,6 @@ import uuid
 import img2pdf
 import subprocess as subp
 from concurrent.futures import ThreadPoolExecutor
-from GenEpub import gen_epub
 from BookerWikiTool.util import fname_escape, safe_mkdir, safe_rmdir
 from EpubCrawler.util import request_retry, safe_remove
 
