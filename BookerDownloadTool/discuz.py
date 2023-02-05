@@ -236,10 +236,11 @@ def batch_dz(args):
     load_exi_list(args)
     with open(fname, encoding='utf-8') as f:
         tids = f.read().split('\n')
-    line = filter(None, [t.strip() for t in tids])
+    lines = filter(None, [t.strip() for t in tids])
     pool = ThreadPoolExecutor(args.threads)
     hdls = []
-    for host, t, *_ in line.split('\t'): 
+    for l in lines:
+        host, t, *_ = l.split('\t')
         args = copy.deepcopy(args)
         args.tid = t
         args.host = host

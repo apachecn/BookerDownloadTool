@@ -98,7 +98,7 @@ def main():
     dl_dz_parser.add_argument("-e", "--end", help="ending date")
     dl_dz_parser.add_argument("-c", "--cookie", default="", help="dz cookie")
     dl_dz_parser.add_argument("-a", "--all", action='store_true', help="whether to crawl all replies")
-    dl_dz_parser.add_argument("-l", "--existed-list", default='exi_dz.json', help="existed fnames JSON")
+    dl_dz_parser.add_argument("-l", "--exi-list", default='exi_dz.json', help="existed fnames JSON")
     dl_dz_parser.set_defaults(func=download_dz)
 
     fetch_parser = subparsers.add_parser("fetch-dz", help="fetch dz tids")
@@ -117,7 +117,7 @@ def main():
     batch_parser.add_argument("-c", "--cookie", default="", help="gn cookie")
     batch_parser.add_argument("-t", "--threads", type=int, default=8, help="num of threads")
     batch_parser.add_argument("-a", "--all", action='store_true', help="whether to crawl all replies")
-    batch_parser.add_argument("-l", "--existed-list", default='exi_dz.json', help="existed fnames JSON")
+    batch_parser.add_argument("-l", "--exi-list", default='exi_dz.json', help="existed fnames JSON")
     batch_parser.set_defaults(func=batch_dz)
 
     args = parser.parse_args()
