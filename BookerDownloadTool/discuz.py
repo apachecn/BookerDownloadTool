@@ -20,8 +20,6 @@ from EpubCrawler.img import process_img
 from EpubCrawler.config import config
 from .util import *
  
-config['colors'] = 256
-config['imgSrc'] = ['zoomfile', 'src']
 exi_list = set()
  
 default_hdrs = {
@@ -131,6 +129,8 @@ def download_dz_safe(args):
     except: traceback.print_exc()
      
 def download_dz(args):
+    config['colors'] = 256
+    config['imgSrc'] = ['zoomfile', 'src']
     tid, cookie = args.tid, args.cookie
     host = args.host
     odir = args.out
