@@ -41,19 +41,19 @@ def main():
     bili_home_parser.add_argument("-a", "--audio", type=bool, default=False, help="whether to convert to audio")
     bili_home_parser.set_defaults(func=batch_home_bili)
     
-    ln_parser = subparsers.add_parser("lightnovel", help="download lightnovel")
+    ln_parser = subparsers.add_parser("ln", help="download lightnovel")
     ln_parser.add_argument("id", help="id")
     ln_parser.add_argument("-s", "--save-path", default='out', help="path to save")
     ln_parser.add_argument("-c", "--cookie", default=os.environ.get('WK8_COOKIE', ''), help="wenku8.net cookie")
     ln_parser.set_defaults(func=download_ln)
 
-    ln_batch_parser = subparsers.add_parser("lightnovel-batch", help="download lightnovel in batch")
+    ln_batch_parser = subparsers.add_parser("batch-ln", help="download lightnovel in batch")
     ln_batch_parser.add_argument("fname", help="file name of ids")
     ln_batch_parser.add_argument("-s", "--save-path", default='out', help="path to save")
     ln_batch_parser.add_argument("-c", "--cookie", default=os.environ.get('WK8_COOKIE', ''), help="wenku8.net cookie")
     ln_batch_parser.set_defaults(func=batch_ln)
 
-    ln_fetch_parser = subparsers.add_parser("lightnovel-fetch", help="fetch lightnovel ids")
+    ln_fetch_parser = subparsers.add_parser("fetch-ln", help="fetch lightnovel ids")
     ln_fetch_parser.add_argument("fname", help="file fname")
     ln_fetch_parser.add_argument("-c", "--cookie", default=os.environ.get('WK8_COOKIE', ''), help="wenku8.net cookie")
     ln_fetch_parser.add_argument("-s", "--start", required=True, help="starting date (YYYYMMDD)")
@@ -77,13 +77,13 @@ def main():
     dmzj_dl_parser.add_argument("-l", "--exi-list", default="dmzj_exi.json", help="fname for existed comic")
     dmzj_dl_parser.set_defaults(func=download_dmzj)
 
-    dmzj_fetch_parser = subparsers.add_parser("dmzj-fetch", help="fetch dmzj comic ids")
+    dmzj_fetch_parser = subparsers.add_parser("fetch-dmzj", help="fetch dmzj comic ids")
     dmzj_fetch_parser.add_argument("fname", help="fname containing ids")
     dmzj_fetch_parser.add_argument("-s", "--start", help="starting date")
     dmzj_fetch_parser.add_argument("-e", "--end", help="ending date")
     dmzj_fetch_parser.set_defaults(func=fetch_dmzj)
 
-    dmzj_batch_parser = subparsers.add_parser("dmzj-batch", help="download dmzj comic in batch")
+    dmzj_batch_parser = subparsers.add_parser("batch-dmzj", help="download dmzj comic in batch")
     dmzj_batch_parser.add_argument("fname", help="fname containing ids")
     dmzj_batch_parser.add_argument("-o", "--out", default="out", help="output dir")
     dmzj_batch_parser.add_argument("--img-threads", type=int, default=8, help="image threads")
