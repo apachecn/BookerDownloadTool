@@ -156,7 +156,8 @@ def batch_dmzj(args):
     lines = filter(None, map(lambda x: x.strip(), lines))
     hdls = []
     for id in lines:
-        part = download_safe(id, False)
+        args.id = id
+        part = download_dmzj_safe(args, False)
         hdls += part
     for h in hdls: h.result()
         
