@@ -115,7 +115,7 @@ def extract_info(name):
     if len(rms) == 0: return ['', name]
     return (rms[0][0], rms[0][1].strip())
         
-def gen_exi(args):
+def gen_exi_list(args):
     dir = args.dir
     res = [
         extract_info(f.replace('.epub', ''))

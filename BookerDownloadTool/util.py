@@ -5,6 +5,8 @@ from os import path
 import imgyaso
 import subprocess as subp
 
+RE_INFO = r'\[(.+?)\]([^\[]+)'
+
 bili_hdrs = {
     'User-Agent': 'PostmanRuntime/7.26.8',
     'Referer': 'https://www.bilibili.com/',
