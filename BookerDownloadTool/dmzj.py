@@ -20,6 +20,7 @@ from EpubCrawler.util import request_retry, safe_remove
 
 ch_pool = None
 img_pool = None
+exi_list = set()
 
 headers = {
     'Referer': 'http://manhua.dmzj.com/',
@@ -28,11 +29,10 @@ headers = {
 
 d = lambda name: path.join(path.dirname(__file__, name))
     
-def load_existed(fname):
-    exi = []
-    if path.exists(fname):
-        exi = json.loads(open(fname, encoding='utf-8').read())
-    return set(exi)
+def load_exi_list(args):
+    global exi_list
+    if not exi_list and path.exists(args.exi_list):
+        exi_list = set(json.loads(open(args.exi_list, encoding='utf-8').read()))
 
 def get_info(html):
     root = pq(html)
@@ -90,7 +90,7 @@ def download_dmzj_ch(url, info, odir):
         
     name = f"{art['title']} - {info['author']} - {art['ch']}"
     ofname = f'{odir}/{name}.pdf'
-    if name in existed or path.exists(ofname):
+    if name in exi_list or path.exists(ofname):
         print('文件已存在')
         return
     safe_mkdir(odir)
@@ -121,6 +121,7 @@ def init_pools(args):
 def download_dmzj(args, block=True):
     id = args.id
     init_pools(args) 
+    load_exi_list(args)
     url = f'http://manhua.dmzj.com/{id}/'
     html = request_retry('GET', url, headers=headers).text
     info = get_info(html)
@@ -150,6 +151,7 @@ def download_dmzj_safe(id, block=True):
 def batch_dmzj(args):
     fname = args.fname
     init_pools(args)
+    load_exi_list(args)
     lines = open(fname, encoding='utf-8').read().split('\n')
     lines = filter(None, map(lambda x: x.strip(), lines))
     hdls = []
