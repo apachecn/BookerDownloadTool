@@ -6,6 +6,7 @@ from .zhihu_ques import *
 from .lightnovel import *
 from .dl_gh_book import *
 from .bili import *
+from .dmzj import *
 
 def main():
     parser = argparse.ArgumentParser(prog="BookerDownloadTool", formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -67,6 +68,13 @@ def main():
     zhihu_ques_sele_parser.add_argument("qid", help="qid")
     zhihu_ques_sele_parser.set_defaults(func=zhihu_ques_sele)
     
+    dmzj_dl_parser = subparsers.add_parser("dmzj", help="download dmzj comic")
+    dmzj_dl_parser.add_argument("id", help="id")
+    dmzj_dl_parser.add_argument("-o", "--out", default="out", help="output dir")
+    dmzj_dl_parser.add_argument("--img-threads", type=int, default=8, help="image threads")
+    dmzj_dl_parser.add_argument("--ch-threads", type=int, default=8, help="chapter threads")
+    dmzj_dl_parser.set_defaults(func=download_dmzj)
+
     args = parser.parse_args()
     args.func(args)
     
