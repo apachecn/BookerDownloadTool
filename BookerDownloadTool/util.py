@@ -4,6 +4,8 @@ import shutil
 from os import path
 import imgyaso
 import subprocess as subp
+import tempfile
+import uuid
 
 RE_INFO = r'\[(.+?)\]([^\[]+)'
 
