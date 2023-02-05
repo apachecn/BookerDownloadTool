@@ -34,7 +34,11 @@ def get_info(html):
     toc = []
     for i in range(len(el_links)):
         toc.append('http://manhua.dmzj.com' + el_links.eq(i).attr('href'))
-    return {'title': fname_escape(title), 'author': fname_escape(author), 'toc': toc}
+    return {
+        'title': filter_gbk(fname_escape(title)), 
+        'author': filter_gbk(fname_escape(author)), 
+        'toc': toc,
+    }
     
 def get_article(html):
     root = pq(html)
