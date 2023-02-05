@@ -15,19 +15,12 @@ import uuid
 import img2pdf
 import subprocess as subp
 from concurrent.futures import ThreadPoolExecutor
-from BookerWikiTool.util import fname_escape, safe_mkdir, safe_rmdir
-from EpubCrawler.util import request_retry, safe_remove
+from EpubCrawler.util import request_retry
+from .util import *
 
 ch_pool = None
 img_pool = None
 exi_list = set()
-
-headers = {
-    'Referer': 'http://manhua.dmzj.com/',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36',
-}
-
-d = lambda name: path.join(path.dirname(__file__, name))
     
 def load_exi_list(args):
     global exi_list
@@ -58,21 +51,10 @@ def get_article(html):
         
 def process_img(img):
     return noisebw_bts(trunc_bts(anime4k_auto(img), 4))
-
-def anime4k_auto(img):
-    fname = path.join(tempfile.gettempdir(), uuid.uuid4().hex + '.png')
-    open(fname, 'wb').write(img)
-    subp.Popen(
-        ['wiki-tool', 'anime4k-auto', fname, '-G'], 
-        shell=True,
-    ).communicate()
-    img = open(fname, 'rb').read()
-    safe_remove(fname)
-    return img
     
 def tr_download_dmzj_img(url, imgs, k):
     print(f'pic: {url}')
-    img = request_retry('GET', url, headers=headers).content
+    img = request_retry('GET', url, headers=dmzj_hdrs).content
     img = process_img(img)
     imgs[k] = img
     
@@ -82,7 +64,7 @@ def download_dmzj_ch_safe(url, info, odir):
     
 def download_dmzj_ch(url, info, odir):
     print(f'ch: {url}')
-    html = request_retry('GET', url, headers=headers).text
+    html = request_retry('GET', url, headers=dmzj_hdrs).text
     art = get_article(html)
     if not art['pics']:
         print('找不到页面')
@@ -123,7 +105,7 @@ def download_dmzj(args, block=True):
     init_pools(args) 
     load_exi_list(args)
     url = f'http://manhua.dmzj.com/{id}/'
-    html = request_retry('GET', url, headers=headers).text
+    html = request_retry('GET', url, headers=dmzj_hdrs).text
     info = get_info(html)
     print(info['title'], info['author'])
     
@@ -171,7 +153,7 @@ def fetch_dmzj(args):
         if stop: break
         print(f'page: {i}')
         url = f'http://sacg.dmzj.com/mh/index.php?c=category&m=doSearch&status=0&reader_group=0&zone=2304&initial=all&type=0&_order=t&p={i}&callback=c'
-        res = request_retry('GET', url, headers=headers).text
+        res = request_retry('GET', url, headers=dmzj_hdrs).text
         j = json.loads(res[2:-2])
         if not j.get('result'): break
         for bk in j['result']:
