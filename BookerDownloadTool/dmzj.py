@@ -33,7 +33,7 @@ def get_info(html):
     el_links = root('.cartoon_online_border li a')
     toc = []
     for i in range(len(el_links)):
-        toc.append('http://manhua.dmzj.com' + el_links.eq(i).attr('href'))
+        toc.append('http://manhua.idmzj.com' + el_links.eq(i).attr('href'))
     return {
         'title': filter_gbk(fname_escape(title)), 
         'author': filter_gbk(fname_escape(author)), 
@@ -47,7 +47,7 @@ def get_article(html):
     sc = root('script:not([src])').eq(0).html()
     if sc:
         pics = execjs.compile(sc).eval('arr_pages') 
-        pics = list(map(lambda s: 'http://images.dmzj.com/' + s, pics))
+        pics = list(map(lambda s: 'http://images.idmzj.com/' + s, pics))
     else: pics = None
     return {'title': fname_escape(title), 'ch': fname_escape(ch), 'pics': pics}
     
@@ -107,7 +107,7 @@ def download_dmzj(args, block=True):
     id = args.id
     init_pools(args) 
     load_exi_list(args)
-    url = f'http://manhua.dmzj.com/{id}/'
+    url = f'http://manhua.idmzj.com/{id}/'
     html = request_retry('GET', url, headers=dmzj_hdrs).text
     info = get_info(html)
     print(info['title'], info['author'])
@@ -155,7 +155,7 @@ def fetch_dmzj(args):
     while True:
         if stop: break
         print(f'page: {i}')
-        url = f'http://sacg.dmzj.com/mh/index.php?c=category&m=doSearch&status=0&reader_group=0&zone=2304&initial=all&type=0&_order=t&p={i}&callback=c'
+        url = f'http://sacg.idmzj.com/mh/index.php?c=category&m=doSearch&status=0&reader_group=0&zone=2304&initial=all&type=0&_order=t&p={i}&callback=c'
         res = request_retry('GET', url, headers=dmzj_hdrs).text
         j = json.loads(res[2:-2])
         if not j.get('result'): break
