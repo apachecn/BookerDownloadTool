@@ -57,7 +57,7 @@ def request_retry(method, url, retry=10, check_status=False, **kw):
             if i == retry - 1: raise e
 
 def safe_mkdir(dir):
-    try: os.mkdir(dir)
+    try: os.makedirs(dir)
     except: pass
     
 def safe_rmdir(dir):
