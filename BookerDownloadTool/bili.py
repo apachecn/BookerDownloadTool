@@ -70,7 +70,7 @@ def download_bili(args):
     bv = j['data']['bvid']
     author = fname_escape(j['data']['owner']['name'])
     title1 = fname_escape(j['data']['title'])
-    for it in j['data']['pages'][sp:ep+1]:
+    for it in j['data']['pages'][sp-1:ep]:
         cid = it['cid']
         pg = it['page']
         title2 = fname_escape(it['part'])
