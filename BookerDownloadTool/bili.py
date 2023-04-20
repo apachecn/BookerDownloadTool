@@ -74,7 +74,8 @@ def download_bili(args):
         cid = it['cid']
         pg = it['page']
         title2 = fname_escape(it['part'])
-        title = f'{title1} - P{pg}：{title2}'
+        title = f'{title1} - P{pg}' if title1 == title2 \
+            else f'{title1} - P{pg}：{title2}'
         print(title, author)
         name = f'{title} - {author} - {bv}'
         ext = 'mp3' if to_audio else 'flv'
