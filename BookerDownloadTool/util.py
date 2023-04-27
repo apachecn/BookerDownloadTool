@@ -3,10 +3,20 @@ import os
 import shutil
 from os import path
 import imgyaso
+import subprocess as subp
+import tempfile
+import uuid
+
+RE_INFO = r'\[(.+?)\]([^\[]+)'
 
 bili_hdrs = {
     'User-Agent': 'PostmanRuntime/7.26.8',
     'Referer': 'https://www.bilibili.com/',
+}
+
+dmzj_hdrs = {
+    'Referer': 'http://manhua.dmzj.com/',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36',
 }
 
 default_hdrs = {
@@ -17,8 +27,18 @@ UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like 
 
 DIR = path.dirname(path.abspath(__file__))
 
-def d(name):
-    return path.join(DIR, name)
+d = lambda name: path.join(path.dirname(__file__, name))
+
+    
+def is_gbk(ch):
+    try: 
+        ch.encode('gbk')
+        return True
+    except:
+        return False
+    
+def filter_gbk(fname):
+    return ''.join([ch for ch in fname if is_gbk(ch)])
 
 def opti_img(img, mode, colors):
     if mode == 'quant':
@@ -63,3 +83,18 @@ def safe_mkdir(dir):
 def safe_rmdir(dir):
     try: shutil.rmtree(dir)
     except: pass
+
+def safe_remove(fname):
+    try: os.unlink(fname)
+    except: pass
+
+def anime4k_auto(img):
+    fname = path.join(tempfile.gettempdir(), uuid.uuid4().hex + '.png')
+    open(fname, 'wb').write(img)
+    subp.Popen(
+        ['wiki-tool', 'anime4k-auto', fname, '-G'], 
+        shell=True,
+    ).communicate()
+    img = open(fname, 'rb').read()
+    safe_remove(fname)
+    return img

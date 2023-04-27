@@ -3,3 +3,6 @@ pyquery
 EpubCrawler
 selenium
 imgyaso
+execjs
+BookerWikiTool
+img2pdf
