@@ -10,7 +10,7 @@ import uuid
 RE_INFO = r'\[(.+?)\]([^\[]+)'
 
 bili_hdrs = {
-    'User-Agent': 'PostmanRuntime/7.26.8',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36',
     'Referer': 'https://www.bilibili.com/',
 }
 
